@@ -3258,7 +3258,7 @@ function withinMaxClamp(min, value, max) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
-/* harmony import */ var _components_Example__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/Example */ "./resources/js/components/Example.jsx");
+/* harmony import */ var _components_UnityGame__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/UnityGame */ "./resources/js/components/UnityGame.js");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes React and other helpers. It's a great starting point while
@@ -3326,10 +3326,10 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
-/***/ "./resources/js/components/Example.jsx":
-/*!*********************************************!*\
-  !*** ./resources/js/components/Example.jsx ***!
-  \*********************************************/
+/***/ "./resources/js/components/UnityGame.js":
+/*!**********************************************!*\
+  !*** ./resources/js/components/UnityGame.js ***!
+  \**********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -3340,27 +3340,37 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom/client */ "./node_modules/react-dom/client.js");
+/* harmony import */ var react_unity_webgl__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-unity-webgl */ "./node_modules/react-unity-webgl/distribution/exports.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 
-function Example() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "container"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "row justify-content-center"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "col-md-8"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "card"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "card-header"
-  }, "Example Component"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "card-body"
-  }, "I'm an example component!")))));
-}
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Example);
-if (document.getElementById('example')) {
-  const Index = react_dom_client__WEBPACK_IMPORTED_MODULE_1__.createRoot(document.getElementById("example"));
-  Index.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().StrictMode), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Example, null)));
+
+
+const UnityGame = () => {
+  const {
+    unityProvider
+  } = (0,react_unity_webgl__WEBPACK_IMPORTED_MODULE_2__.useUnityContext)({
+    loaderUrl: "./unity/Build/unity.loader.js",
+    dataUrl: "./unity/Build/unity.data",
+    frameworkUrl: "./unity/Build/unity.framework.js",
+    codeUrl: "./unity/Build/unity.wasm"
+  });
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_unity_webgl__WEBPACK_IMPORTED_MODULE_2__.Unity, {
+      unityProvider: unityProvider,
+      style: {
+        width: 800,
+        height: 600
+      }
+    })
+  });
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (UnityGame);
+if (document.getElementById("unity")) {
+  const Index = react_dom_client__WEBPACK_IMPORTED_MODULE_1__.createRoot(document.getElementById("unity"));
+  Index.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)((react__WEBPACK_IMPORTED_MODULE_0___default().StrictMode), {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(UnityGame, {})
+  }));
 }
 
 /***/ }),
@@ -57842,6 +57852,2256 @@ if (false) {} else {
 
 /***/ }),
 
+/***/ "./node_modules/react-unity-webgl/distribution/components/unity-component.js":
+/*!***********************************************************************************!*\
+  !*** ./node_modules/react-unity-webgl/distribution/components/unity-component.js ***!
+  \***********************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Unity = void 0;
+var react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var react_2 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var use_unity_canvas_id_1 = __webpack_require__(/*! ../hooks/use-unity-canvas-id */ "./node_modules/react-unity-webgl/distribution/hooks/use-unity-canvas-id.js");
+var use_unity_instance_1 = __webpack_require__(/*! ../hooks/use-unity-instance */ "./node_modules/react-unity-webgl/distribution/hooks/use-unity-instance.js");
+var use_unity_arguments_1 = __webpack_require__(/*! ../hooks/use-unity-arguments */ "./node_modules/react-unity-webgl/distribution/hooks/use-unity-arguments.js");
+var use_unity_loader_1 = __webpack_require__(/*! ../hooks/use-unity-loader */ "./node_modules/react-unity-webgl/distribution/hooks/use-unity-loader.js");
+/**
+ * Renders the provided Unity Application.
+ */
+var Unity = (0, react_2.forwardRef)(
+/**
+ * @param unityProps The Unity props provided the the Unity component.
+ * @param forwardedRef The forwarded ref to the Unity component.
+ * @returns The Unity canvas renderer.
+ */
+function (unityProps, forwardedRef) {
+    /**
+     * A reference to the HTML Canvas Element. This Canvas Element will eventually
+     * be passed to the Unity Instance hook which it will use to render the Unity
+     * application.
+     */
+    var htmlCanvasElementRef = (0, react_2.useRef)(null);
+    /**
+     * A unique Unity canvas ID. This is used internally by Unity since version
+     * 2021.2 to identify the canvas element in the DOM. This is not documented in
+     * the Unity documentation, but it is used in the Unity source code.
+     */
+    var unityCanvasId = (0, use_unity_canvas_id_1.useUnityCanvasId)();
+    /**
+     * The Unity Arguments object which can be passed to the create Unity instance
+     * method in order to initialize it. These arguments are created based on the
+     * provided Unity Props which also include the Unity Provider and thus the
+     * Unity Config.
+     */
+    var unityArguments = (0, use_unity_arguments_1.useUnityArguments)(unityProps);
+    /**
+     * The corresponding Unity Loader will be loaded based on the provided loader
+     * URL from the Unity Provider's Unity Config.
+     */
+    var unityLoaderStatus = (0, use_unity_loader_1.useUnityLoader)(unityProps.unityProvider.unityConfig.loaderUrl);
+    // The Unity Instance is created based on the Unity Arguments. The loader
+    // status will be used to determine if the Unity instance should be created.
+    // The Unity is mounted to the Canvas Element.
+    (0, use_unity_instance_1.useUnityInstance)(unityLoaderStatus, htmlCanvasElementRef.current, unityArguments, unityProps.unityProvider);
+    // The imperative handle is used to pass the Canvas Element to the parent
+    // component using the forwardRef.
+    (0, react_1.useImperativeHandle)(forwardedRef, function () { return htmlCanvasElementRef.current; });
+    // Returns the Unity Canvas Element which will render the Unity application.
+    return (0, react_1.createElement)("canvas", {
+        ref: htmlCanvasElementRef,
+        id: unityCanvasId,
+        style: unityProps.style,
+        className: unityProps.className,
+        tabIndex: unityProps.tabIndex,
+    });
+});
+exports.Unity = Unity;
+
+
+/***/ }),
+
+/***/ "./node_modules/react-unity-webgl/distribution/constants/error-messages.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/react-unity-webgl/distribution/constants/error-messages.js ***!
+  \*********************************************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.errorMessages = void 0;
+var errorMessages = {
+    /**
+     * A generic error message when the Unity Instance is not available.
+     */
+    genericNoUnityInstance: "No Unity Instance found.",
+    /**
+     * The error message for when no Unity Instance was found while trying to set
+     * the fullscreen mode.
+     */
+    requestFullscreenNoUnityInstance: "Unable to Set Fullscreen while Unity is not Instantiated.",
+    /**
+     * The error message for when no Unity Instance was found while trying to
+     * request the pointer lock.
+     */
+    requestPointerLockNoUnityInstanceOrCanvas: "Unable to Request Pointer Lock while Unity is not Instantiated or the Canvas is not found.",
+    /**
+     * The error message for when no Unity Instance was found while trying to send
+     * a message.
+     */
+    sendMessageNoUnityInstance: "Unable to Send Message while Unity is not Instantiated.",
+    /**
+     * The error message for when no Unity Instance was found while trying to quit
+     * the Unity Instance.
+     */
+    quitNoUnityInstance: "Unable to Quit Unity while Unity is not Instantiated.",
+    /**
+     * The error message for when no Unity Instance or Canvas was found while
+     * trying to take a screenshot.
+     */
+    screenshotNoUnityInstanceOrCanvas: "Unable to Take Screenshot while Unity is not Instantiated or Canvas is not available.",
+    /**
+     * The error message for when no event listener was found in the event
+     * system.
+     */
+    noEventListener: "Unable to find Event Listener in Event System for Event",
+};
+exports.errorMessages = errorMessages;
+
+
+/***/ }),
+
+/***/ "./node_modules/react-unity-webgl/distribution/constants/is-browser-environment.js":
+/*!*****************************************************************************************!*\
+  !*** ./node_modules/react-unity-webgl/distribution/constants/is-browser-environment.js ***!
+  \*****************************************************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.isBrowserEnvironment = void 0;
+/**
+ * Defines if the current environment is a browser environment. This is
+ * determined by checking if the `window` and `document` objects are defined.
+ */
+exports.isBrowserEnvironment = typeof window !== "undefined" && typeof document !== "undefined";
+
+
+/***/ }),
+
+/***/ "./node_modules/react-unity-webgl/distribution/enums/unity-loader-status.js":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/react-unity-webgl/distribution/enums/unity-loader-status.js ***!
+  \**********************************************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.UnityLoaderStatus = void 0;
+/**
+ * The status of the Unity loader.
+ */
+var UnityLoaderStatus;
+(function (UnityLoaderStatus) {
+    /**
+     * The Unity loader is idling and awaiting a resource it be loaded.
+     */
+    UnityLoaderStatus["Idle"] = "Idle";
+    /**
+     * The Unity loader is loading a resource.
+     */
+    UnityLoaderStatus["Loading"] = "Loading";
+    /**
+     * The Unity loader has loaded a resource.
+     */
+    UnityLoaderStatus["Loaded"] = "Loaded";
+    /**
+     * The Unity loader has failed to load a resource.
+     */
+    UnityLoaderStatus["Error"] = "Error";
+})(UnityLoaderStatus || (UnityLoaderStatus = {}));
+exports.UnityLoaderStatus = UnityLoaderStatus;
+
+
+/***/ }),
+
+/***/ "./node_modules/react-unity-webgl/distribution/exports.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/react-unity-webgl/distribution/exports.js ***!
+  \****************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.useUnityContext = exports.Unity = void 0;
+var unity_component_1 = __webpack_require__(/*! ./components/unity-component */ "./node_modules/react-unity-webgl/distribution/components/unity-component.js");
+Object.defineProperty(exports, "Unity", ({ enumerable: true, get: function () { return unity_component_1.Unity; } }));
+var use_unity_context_1 = __webpack_require__(/*! ./hooks/use-unity-context */ "./node_modules/react-unity-webgl/distribution/hooks/use-unity-context.js");
+Object.defineProperty(exports, "useUnityContext", ({ enumerable: true, get: function () { return use_unity_context_1.useUnityContext; } }));
+
+
+/***/ }),
+
+/***/ "./node_modules/react-unity-webgl/distribution/hooks/use-event-system.js":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/react-unity-webgl/distribution/hooks/use-event-system.js ***!
+  \*******************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.useEventSystem = void 0;
+var react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var error_messages_1 = __webpack_require__(/*! ../constants/error-messages */ "./node_modules/react-unity-webgl/distribution/constants/error-messages.js");
+var is_browser_environment_1 = __webpack_require__(/*! ../constants/is-browser-environment */ "./node_modules/react-unity-webgl/distribution/constants/is-browser-environment.js");
+/**
+ * An array of dispatch event methods from within the mounted event systems.
+ * This allows an event to be dispatched within all of the event system
+ * instances.
+ */
+var mountedEventDispatchers = [];
+/**
+ * Dispatches an event to all mounted event systems.
+ * @param eventName The name of the event to dispatch.
+ * @param parameters The parameters to pass to the event listener.
+ */
+var dispatchReactUnityEvent = function (eventName) {
+    var parameters = [];
+    for (var _i = 1; _i < arguments.length; _i++) {
+        parameters[_i - 1] = arguments[_i];
+    }
+    // Loops through all of the mounted event systems and dispatches the event.
+    // In case there are multiple event systems, the return value origin is
+    // undefined.
+    var returnValue = undefined;
+    mountedEventDispatchers.forEach(function (dispatchEvent) {
+        returnValue = dispatchEvent.apply(void 0, __spreadArray([eventName], parameters, false));
+    });
+    return returnValue;
+};
+if (is_browser_environment_1.isBrowserEnvironment === true) {
+    // It is possible for the application being rendered server side. We'll check
+    // if the app is running in a browser environment and if so, we'll make the
+    // dispatch React Unity event function available to the global scope.
+    window.dispatchReactUnityEvent = dispatchReactUnityEvent;
+}
+/**
+ * Event system for invoking external React Unity events.
+ * @returns The Event System hook.
+ */
+var useEventSystem = function () {
+    /**
+     * An array of all registered event listeners.
+     */
+    var eventListeners = (0, react_1.useRef)([]);
+    /**
+     * Adds an event listener for external React Unity events.
+     */
+    var addEventListener = (0, react_1.useCallback)(
+    /**
+     * @param eventName The name of the event to listen to.
+     * @param callback The callback to invoke when the event is fired.
+     */
+    function (eventName, callback) {
+        // Add the event listener will be added to the array of event listeners.
+        eventListeners.current = __spreadArray(__spreadArray([], eventListeners.current, true), [
+            { eventName: eventName, callback: callback },
+        ], false);
+    }, [eventListeners]);
+    /**
+     * Removes an event listener for external React Unity events.
+     */
+    var removeEventListener = (0, react_1.useCallback)(
+    /**
+     * @param eventName The name of the event to remove.
+     * @param callback The callback to remove.
+     */
+    function (eventName, callback) {
+        // The event listener will be filtered from the event listeners array
+        // based on its name and the reference to the callback.
+        eventListeners.current = eventListeners.current.filter(function (eventListener) {
+            return eventListener.eventName !== eventName &&
+                eventListener.callback !== callback;
+        });
+    }, [eventListeners]);
+    /**
+     * Dispatches an event.
+     */
+    var dispatchEvent = (0, react_1.useCallback)(
+    /**
+     * @param eventName The name of the event to dispatch.
+     * @param parameters The parameters to pass to the event listener.
+     */
+    function (eventName) {
+        var parameters = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            parameters[_i - 1] = arguments[_i];
+        }
+        // The event listener will be filtered from the event listeners array
+        // based on its name.
+        var eventListener = eventListeners.current.find(function (eventListener) { return eventListener.eventName === eventName; });
+        if (typeof eventListener === "undefined") {
+            // Guarding the event listener.
+            console.warn(error_messages_1.errorMessages.noEventListener, { eventName: eventName });
+            return;
+        }
+        // The event listener will be invoked with the parameters.
+        return eventListener.callback.apply(eventListener, parameters);
+    }, [eventListeners]);
+    // Effect ensures that the dispatch event function is available to the
+    // global array of event listeners. This allows the global method to dispatch
+    // events within the event system hooks.
+    (0, react_1.useEffect)(function () {
+        mountedEventDispatchers.push(dispatchEvent);
+        return function () {
+            mountedEventDispatchers.splice(mountedEventDispatchers.indexOf(dispatchEvent), 1);
+        };
+    }, [dispatchEvent]);
+    return {
+        addEventListener: addEventListener,
+        removeEventListener: removeEventListener,
+    };
+};
+exports.useEventSystem = useEventSystem;
+
+
+/***/ }),
+
+/***/ "./node_modules/react-unity-webgl/distribution/hooks/use-nullable-state.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/react-unity-webgl/distribution/hooks/use-nullable-state.js ***!
+  \*********************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.useNullableState = void 0;
+var react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/**
+ * A hook that creates a nullable state.
+ * @param initialState Optional initial state, defaults to null.
+ * @returns a stateful value, and a function to update it.
+ */
+var useNullableState = function (initialState) {
+    return (0, react_1.useState)(initialState || null);
+};
+exports.useNullableState = useNullableState;
+
+
+/***/ }),
+
+/***/ "./node_modules/react-unity-webgl/distribution/hooks/use-unity-arguments.js":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/react-unity-webgl/distribution/hooks/use-unity-arguments.js ***!
+  \**********************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.useUnityArguments = void 0;
+var react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/**
+ * Creates a memoized Unity Arguments object which can be passed to the Unity
+ * instance in order to initialize it.
+ * @param unityProps The Unity props provided the the Unity component.
+ * @returns The Unity arguments to pass to the Unity instance.
+ */
+var useUnityArguments = function (unityProps) {
+    return (0, react_1.useMemo)(function () { return ({
+        // Assigns the data URL, framework URL, and code URL to the Unity
+        // arguments object.
+        dataUrl: unityProps.unityProvider.unityConfig.dataUrl,
+        frameworkUrl: unityProps.unityProvider.unityConfig.frameworkUrl,
+        codeUrl: unityProps.unityProvider.unityConfig.codeUrl,
+        // Assigns the optional streaming assets URL, memory URL, and symbols URL
+        // to the Unity arguments object.
+        streamingAssetsUrl: unityProps.unityProvider.unityConfig.streamingAssetsUrl,
+        memoryUrl: unityProps.unityProvider.unityConfig.memoryUrl,
+        symbolsUrl: unityProps.unityProvider.unityConfig.symbolsUrl,
+        // Assigns the optional company name, product name, and product version to
+        // the Unity arguments object.
+        companyName: unityProps.unityProvider.unityConfig.companyName,
+        productName: unityProps.unityProvider.unityConfig.productName,
+        productVersion: unityProps.unityProvider.unityConfig.productVersion,
+        // Assigns the webgl context attributes to the Unity arguments object.
+        // If the webgl context attributes are not defined via the Unity Props,
+        // the default value of an empty object will be used.
+        webglContextAttributes: unityProps.unityProvider.unityConfig.webglContextAttributes || {},
+        // Assigns the cache control value to the Unity arguments object. If the
+        // cache control value is not defined via the Unity Props, the default
+        // value of always `must-revalidate` will be used.
+        cacheControl: unityProps.unityProvider.unityConfig.cacheControl ||
+            (function () { return "must-revalidate"; }),
+        // Assigns the device pixel ratio to the Unity arguments object. If the
+        // device pixel ratio is not defined via the Unity Props, the default
+        // value of `1` will be used.
+        devicePixelRatio: unityProps.devicePixelRatio || 1,
+        // Assigns the match WebGL to canvas size value to the Unity arguments
+        // object. If the match WebGL to canvas size value is not defined via the
+        // Unity Props, the default value of `true` will be used.
+        matchWebGLToCanvasSize: unityProps.matchWebGLToCanvasSize || true,
+        // Assigns the disabled canvas events to the Unity arguments object. If
+        // the disabled canvas events are not defined via the Unity Props, the
+        // default value of `contextmenu` and `dragstart` will be used.
+        disabledCanvasEvents: unityProps.disabledCanvasEvents || [
+            "contextmenu",
+            "dragstart",
+        ],
+        // Assigns the print hook to the Unity arguments object. This hook will
+        // be called whenever the Unity instance prints a message.
+        print: 
+        /**
+         * Intercept print events in order to catch messages and send them to
+         * the unity context instead.
+         * @param message The message to be printed.
+         */
+        function (message) {
+            // TODO -- Re-implement this hook.
+        },
+        // Assigns the print error hook to the Unity arguments object. This hook
+        // will be called whenever the Unity instance prints an error.
+        printErr: 
+        /**
+         * Intercept print error events in order to catch messages and send them
+         * to the unity context instead.
+         * @param error The error to be printed.
+         */
+        function (error) {
+            // TODO -- Re-implement this hook.
+        },
+    }); }, []);
+};
+exports.useUnityArguments = useUnityArguments;
+
+
+/***/ }),
+
+/***/ "./node_modules/react-unity-webgl/distribution/hooks/use-unity-canvas-id.js":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/react-unity-webgl/distribution/hooks/use-unity-canvas-id.js ***!
+  \**********************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.useUnityCanvasId = void 0;
+var react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/**
+ * The canvas count is used to generate a unique Unity canvas ID.
+ */
+var unityCanvasCount = 0;
+/**
+ * The prefix used to generate a unique Unity canvas ID.
+ */
+var unityCanvasIdPrefix = "react-unity-webgl-canvas";
+/**
+ * Generates a unique Unity canvas ID. This is used internally by Unity since
+ * version 2021.2 to identify the canvas element in the DOM. This is not
+ * documented in the Unity documentation, but it is used in the Unity source
+ * code.
+ * @returns A unique identifier for a Unity canvas element.
+ */
+var useUnityCanvasId = function () {
+    /**
+     * A unique identifier for a Unity canvas element is memorized.
+     */
+    var unityCanvasId = (0, react_1.useMemo)(function () {
+        // The Unity canvas ID is generated by concatenating the Unity canvas ID
+        // prefix with the canvas count. Every time this value is requested, the
+        // canvas count is incremented.
+        return [unityCanvasIdPrefix, ++unityCanvasCount].join("-");
+    }, []);
+    return unityCanvasId;
+};
+exports.useUnityCanvasId = useUnityCanvasId;
+
+
+/***/ }),
+
+/***/ "./node_modules/react-unity-webgl/distribution/hooks/use-unity-context.js":
+/*!********************************************************************************!*\
+  !*** ./node_modules/react-unity-webgl/distribution/hooks/use-unity-context.js ***!
+  \********************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.useUnityContext = void 0;
+var react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var error_messages_1 = __webpack_require__(/*! ../constants/error-messages */ "./node_modules/react-unity-webgl/distribution/constants/error-messages.js");
+var use_event_system_1 = __webpack_require__(/*! ./use-event-system */ "./node_modules/react-unity-webgl/distribution/hooks/use-event-system.js");
+var use_nullable_state_1 = __webpack_require__(/*! ./use-nullable-state */ "./node_modules/react-unity-webgl/distribution/hooks/use-nullable-state.js");
+/**
+ * Creates a Unity Context hook.
+ * @param unityConfig The Unity Config on which the Unity Context is based.
+ * @returns The Unity Context hook.
+ */
+var useUnityContext = function (unityConfig) {
+    // A reference to the Unity Instance.
+    var _a = (0, use_nullable_state_1.useNullableState)(), unityInstance = _a[0], setUnityInstance = _a[1];
+    // The Unity Instance's loading progression represents the percentage of the
+    // Unity Instance's loading process that has been completed.
+    var _b = (0, react_1.useState)(0), loadingProgression = _b[0], setLoadingProgression = _b[1];
+    // Defines whether the Unity Instance has been loaded.
+    var _c = (0, react_1.useState)(false), isLoaded = _c[0], setIsLoaded = _c[1];
+    // May contain an error that occurred during the initialisation of the Unity
+    // Instance.
+    var _d = (0, use_nullable_state_1.useNullableState)(), initialisationError = _d[0], setInitialisationError = _d[1];
+    /**
+     * The Unity Context's event system stores the event listeners which will
+     * allow Unity or any global source to invoke events to the React application.
+     */
+    var eventSystem = (0, use_event_system_1.useEventSystem)();
+    /**
+     * The Unity Context returns a Unity Provider instance. This is an immutable
+     * object that contains a series of methods and properties that are used to
+     * alter the Unity Context state externally.
+     */
+    var unityProvider = (0, react_1.useRef)({
+        setLoadingProgression: setLoadingProgression,
+        setInitialisationError: setInitialisationError,
+        setUnityInstance: setUnityInstance,
+        setIsLoaded: setIsLoaded,
+        unityConfig: unityConfig,
+    });
+    /**
+     * Enables or disabled the Fullscreen mode of the Unity Instance.
+     */
+    var requestFullscreen = (0, react_1.useCallback)(
+    /**
+     * @param enabled Defines whether Unity should be in fullscreen.
+     */
+    function (enabled) {
+        if (unityInstance === null) {
+            // Guarding the Unity Instance.
+            console.warn(error_messages_1.errorMessages.requestFullscreenNoUnityInstance);
+            return;
+        }
+        // For undocumented reasons, the fullscreen mode can only be enabled
+        // with an interger value where the value of "1" enables the fullscreen
+        // mode and the value of "0" disables the fullscreen mode.
+        unityInstance.SetFullscreen(enabled === true ? 1 : 0);
+    }, [unityInstance]);
+    /**
+     * Lets you asynchronously ask for the pointer to be locked on the given Unity
+     * Application's Canvas Element.
+     */
+    var requestPointerLock = (0, react_1.useCallback)(function () {
+        if (unityInstance === null ||
+            typeof unityInstance.Module.canvas === "undefined") {
+            // Guarding the Unity Instance and the canvas.
+            console.warn(error_messages_1.errorMessages.requestPointerLockNoUnityInstanceOrCanvas);
+            return;
+        }
+        // Requesting the pointer lock.
+        return unityInstance.Module.canvas.requestPointerLock();
+    }, [unityInstance]);
+    /**
+     * Sends a message to the UnityInstance to invoke a public method.
+     */
+    var sendMessage = (0, react_1.useCallback)(
+    /**
+     * @param gameObjectName the name of the game object in your Unity scene.
+     * @param methodName the name of the public method on the game object.
+     * @param parameter an optional parameter to pass along to the method.
+     */
+    function (gameObjectName, methodName, parameter) {
+        if (unityInstance === null) {
+            // Guarding the Unity Instance.
+            console.warn(error_messages_1.errorMessages.sendMessageNoUnityInstance);
+            return;
+        }
+        unityInstance.SendMessage(gameObjectName, methodName, parameter);
+    }, [unityInstance]);
+    /**
+     * Takes a screenshot of the Unity Instance and returns a base64 encoded
+     * string.
+     */
+    var takeScreenshot = (0, react_1.useCallback)(
+    /**
+     * @param dataType Defines the type of screenshot to take.
+     * @param quality Defines the quality of the screenshot.
+     * @returns A base 64 encoded string of the screenshot.
+     */
+    function (dataType, quality) {
+        if (unityInstance === null ||
+            typeof unityInstance.Module.canvas === "undefined") {
+            // Guarding the Unity Instance and the canvas.
+            console.warn(error_messages_1.errorMessages.screenshotNoUnityInstanceOrCanvas);
+            return;
+        }
+        // Takes a screenshot by converting Canvas's render-context's buffer into
+        // a Data URL of the specified data type and quality.
+        return unityInstance.Module.canvas.toDataURL(dataType, quality);
+    }, [unityInstance]);
+    /**
+     * Requests the UnityInstance to be unloaded from memory in order to be
+     * unmounted from the DOM.
+     */
+    var unload = (0, react_1.useCallback)(
+    /**
+     * @returns A promise that resolves when the UnityInstance has been unloaded.
+     */
+    function () {
+        if (unityInstance === null) {
+            // Guarding the Unity Instance.
+            console.warn(error_messages_1.errorMessages.quitNoUnityInstance);
+            return Promise.reject();
+        }
+        return unityInstance.Quit();
+    }, [unityInstance]);
+    /**
+     * Detatches the Unity Instance from the React DOM, by doing so, the Unity
+     * Instance can be unloaded from the memory while the Unity component can be
+     * unmounted safely.
+     *
+     * Warning! This is a workaround for the fact that the Unity WebGL instances
+     * which are build with Unity 2021.2 and newer cannot be unmounted before the
+     * Unity Instance is unloaded.
+     * @see https://github.com/jeffreylanters/react-unity-webgl/issues/22
+     */
+    var UNSAFE__detachAndUnloadImmediate = (0, react_1.useCallback)(
+    /**
+     * @returns A promise that resolves when the UnityInstance has been unloaded.
+     */
+    function () { return __awaiter(void 0, void 0, void 0, function () {
+        var canvas;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    if (unityInstance === null ||
+                        typeof unityInstance.Module.canvas === "undefined") {
+                        // Guarding the Unity Instance.
+                        console.warn(error_messages_1.errorMessages.genericNoUnityInstance);
+                        return [2 /*return*/, Promise.reject()];
+                    }
+                    canvas = unityInstance.Module.canvas;
+                    document.body.appendChild(canvas);
+                    canvas.style.display = "none";
+                    // Unloads the Unity Instance.
+                    return [4 /*yield*/, unload()];
+                case 1:
+                    // Unloads the Unity Instance.
+                    _a.sent();
+                    // Eventually the canvas will be removed from the DOM. This has to be done
+                    // manually since the canvas is no longer controlled by the React DOM.
+                    canvas.remove();
+                    return [2 /*return*/];
+            }
+        });
+    }); }, [unityInstance]);
+    // Effect invoked when the loading progression changes. When the loading
+    // progression is equal to or more than 1, the Unity Instance is considered
+    // loaded. This will update the isLoaded state.
+    (0, react_1.useEffect)(function () {
+        setIsLoaded(loadingProgression === 1);
+    }, [loadingProgression]);
+    // Returns the Unity Context Hook.
+    return {
+        unityProvider: unityProvider.current,
+        loadingProgression: loadingProgression,
+        initialisationError: initialisationError,
+        isLoaded: isLoaded,
+        UNSAFE__unityInstance: unityInstance,
+        requestFullscreen: requestFullscreen,
+        requestPointerLock: requestPointerLock,
+        sendMessage: sendMessage,
+        unload: unload,
+        takeScreenshot: takeScreenshot,
+        addEventListener: eventSystem.addEventListener,
+        removeEventListener: eventSystem.removeEventListener,
+        UNSAFE__detachAndUnloadImmediate: UNSAFE__detachAndUnloadImmediate,
+    };
+};
+exports.useUnityContext = useUnityContext;
+
+
+/***/ }),
+
+/***/ "./node_modules/react-unity-webgl/distribution/hooks/use-unity-instance.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/react-unity-webgl/distribution/hooks/use-unity-instance.js ***!
+  \*********************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.useUnityInstance = void 0;
+var react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var unity_loader_status_1 = __webpack_require__(/*! ../enums/unity-loader-status */ "./node_modules/react-unity-webgl/distribution/enums/unity-loader-status.js");
+var is_browser_environment_1 = __webpack_require__(/*! ../constants/is-browser-environment */ "./node_modules/react-unity-webgl/distribution/constants/is-browser-environment.js");
+/**
+ * Creates a Unity Instance.
+ * @param unityLoaderStatus The loader status.
+ * @param htmlCanvasElement A reference to the html canvas element.
+ * @param unityArguments The Unity instance arguments.
+ * @param unityProvider The Unity provider.
+ * @returns the Unity Instance among with the status of the Unity Instance.
+ */
+var useUnityInstance = function (unityLoaderStatus, htmlCanvasElement, unityArguments, unityProvider) {
+    // Effect invoked when the Unity Loader status or canvas reference changes.
+    (0, react_1.useEffect)(function () {
+        (function () { return __awaiter(void 0, void 0, void 0, function () {
+            var unityInstance, error_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        // It is possible for the application being rendered server side. In
+                        // this scenario, the window is not available. We can't create the
+                        // Unity Instance in this case.
+                        if (is_browser_environment_1.isBrowserEnvironment === false) {
+                            return [2 /*return*/];
+                        }
+                        if (unityLoaderStatus !== unity_loader_status_1.UnityLoaderStatus.Loaded ||
+                            htmlCanvasElement === null) {
+                            // If the loader is not loaded, or the canvas is not available,
+                            // we can't create the Unity instance yet. In case of a fresh load,
+                            // we'll clear the initialisation error as well.
+                            unityProvider.setUnityInstance(null);
+                            unityProvider.setInitialisationError(null);
+                            return [2 /*return*/];
+                        }
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, window.createUnityInstance(htmlCanvasElement, unityArguments, unityProvider.setLoadingProgression)];
+                    case 2:
+                        unityInstance = _a.sent();
+                        // When the Unity Instance is created, its reference is stored in the
+                        // state while the error state is cleared.
+                        unityProvider.setUnityInstance(unityInstance);
+                        unityProvider.setInitialisationError(null);
+                        return [3 /*break*/, 4];
+                    case 3:
+                        error_1 = _a.sent();
+                        // When the Unity Instance catches due to a fail during the creation,
+                        // the Unity Instnace reference will be cleared while the error is
+                        // placed into the state.
+                        unityProvider.setUnityInstance(null);
+                        unityProvider.setInitialisationError(error_1);
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        }); })();
+    }, [unityLoaderStatus, htmlCanvasElement, unityArguments, unityProvider]);
+};
+exports.useUnityInstance = useUnityInstance;
+
+
+/***/ }),
+
+/***/ "./node_modules/react-unity-webgl/distribution/hooks/use-unity-loader.js":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/react-unity-webgl/distribution/hooks/use-unity-loader.js ***!
+  \*******************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.useUnityLoader = void 0;
+var react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var is_browser_environment_1 = __webpack_require__(/*! ../constants/is-browser-environment */ "./node_modules/react-unity-webgl/distribution/constants/is-browser-environment.js");
+var unity_loader_status_1 = __webpack_require__(/*! ../enums/unity-loader-status */ "./node_modules/react-unity-webgl/distribution/enums/unity-loader-status.js");
+/**
+ * Hook to embed a Unity Loader script.
+ * @param source The source of the unity loader.
+ * @returns a hook that returns the status of the loader.
+ */
+var useUnityLoader = function (source) {
+    var _a = (0, react_1.useState)(unity_loader_status_1.UnityLoaderStatus.Loading), status = _a[0], setStatus = _a[1];
+    // Effect hook will be invoked when the source changes.
+    (0, react_1.useEffect)(function () {
+        // It is possible for the application being rendered server side. In
+        // this scenario, the window is not available. We can't create a Unity
+        // Loader in this case.
+        if (is_browser_environment_1.isBrowserEnvironment === false) {
+            return;
+        }
+        // If the script's source is null, we'll reset the status to idle.
+        if (source === null) {
+            setStatus(unity_loader_status_1.UnityLoaderStatus.Idle);
+            return;
+        }
+        /**
+         * Find existing script element by source. It may have been added by
+         * another instance of this hook.
+         */
+        var script = window.document.querySelector("script[src=\"".concat(source, "\"]"));
+        // If there wan't another instance of this script, we're going to create a
+        // new one with the provided source.
+        if (script === null) {
+            script = window.document.createElement("script");
+            script.type = "text/javascript";
+            script.src = source;
+            script.async = true;
+            script.setAttribute("data-status", "loading");
+            // Add script to window.document body.
+            window.document.body.appendChild(script);
+            // Store status in attribute on script. This can be read by other
+            // instances of this hook.
+            script.addEventListener("load", function () {
+                return script === null || script === void 0 ? void 0 : script.setAttribute("data-status", "loaded");
+            });
+            script.addEventListener("error", function () {
+                return script === null || script === void 0 ? void 0 : script.setAttribute("data-status", "error");
+            });
+        }
+        else {
+            // If there already was a script with the same source, grab its existing
+            // script status from attribute and set to state.
+            setStatus(script.getAttribute("data-status") === "loaded"
+                ? unity_loader_status_1.UnityLoaderStatus.Loaded
+                : unity_loader_status_1.UnityLoaderStatus.Error);
+        }
+        /**
+         * Script event handler to update status in state. Even if the script
+         * already exists we still need to add event handlers to update the state
+         * for this hook instance.
+         * @param event The event that was triggered.
+         */
+        var setStateFromEvent = function (event) {
+            return setStatus(event.type === "load"
+                ? unity_loader_status_1.UnityLoaderStatus.Loaded
+                : unity_loader_status_1.UnityLoaderStatus.Error);
+        };
+        script.addEventListener("load", setStateFromEvent);
+        script.addEventListener("error", setStateFromEvent);
+        // Remove event listeners on cleanup.
+        return function () {
+            if (script !== null) {
+                script.removeEventListener("load", setStateFromEvent);
+                script.removeEventListener("error", setStateFromEvent);
+                window.document.body.removeChild(script);
+            }
+        };
+    }, [source]);
+    return status;
+};
+exports.useUnityLoader = useUnityLoader;
+
+
+/***/ }),
+
+/***/ "./node_modules/react/cjs/react-jsx-runtime.development.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/react/cjs/react-jsx-runtime.development.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+/**
+ * @license React
+ * react-jsx-runtime.development.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+if (true) {
+  (function() {
+'use strict';
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+// ATTENTION
+// When adding new symbols to this file,
+// Please consider also adding to 'react-devtools-shared/src/backend/ReactSymbols'
+// The Symbol used to tag the ReactElement-like types.
+var REACT_ELEMENT_TYPE = Symbol.for('react.element');
+var REACT_PORTAL_TYPE = Symbol.for('react.portal');
+var REACT_FRAGMENT_TYPE = Symbol.for('react.fragment');
+var REACT_STRICT_MODE_TYPE = Symbol.for('react.strict_mode');
+var REACT_PROFILER_TYPE = Symbol.for('react.profiler');
+var REACT_PROVIDER_TYPE = Symbol.for('react.provider');
+var REACT_CONTEXT_TYPE = Symbol.for('react.context');
+var REACT_FORWARD_REF_TYPE = Symbol.for('react.forward_ref');
+var REACT_SUSPENSE_TYPE = Symbol.for('react.suspense');
+var REACT_SUSPENSE_LIST_TYPE = Symbol.for('react.suspense_list');
+var REACT_MEMO_TYPE = Symbol.for('react.memo');
+var REACT_LAZY_TYPE = Symbol.for('react.lazy');
+var REACT_OFFSCREEN_TYPE = Symbol.for('react.offscreen');
+var MAYBE_ITERATOR_SYMBOL = Symbol.iterator;
+var FAUX_ITERATOR_SYMBOL = '@@iterator';
+function getIteratorFn(maybeIterable) {
+  if (maybeIterable === null || typeof maybeIterable !== 'object') {
+    return null;
+  }
+
+  var maybeIterator = MAYBE_ITERATOR_SYMBOL && maybeIterable[MAYBE_ITERATOR_SYMBOL] || maybeIterable[FAUX_ITERATOR_SYMBOL];
+
+  if (typeof maybeIterator === 'function') {
+    return maybeIterator;
+  }
+
+  return null;
+}
+
+var ReactSharedInternals = React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+
+function error(format) {
+  {
+    {
+      for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+        args[_key2 - 1] = arguments[_key2];
+      }
+
+      printWarning('error', format, args);
+    }
+  }
+}
+
+function printWarning(level, format, args) {
+  // When changing this logic, you might want to also
+  // update consoleWithStackDev.www.js as well.
+  {
+    var ReactDebugCurrentFrame = ReactSharedInternals.ReactDebugCurrentFrame;
+    var stack = ReactDebugCurrentFrame.getStackAddendum();
+
+    if (stack !== '') {
+      format += '%s';
+      args = args.concat([stack]);
+    } // eslint-disable-next-line react-internal/safe-string-coercion
+
+
+    var argsWithFormat = args.map(function (item) {
+      return String(item);
+    }); // Careful: RN currently depends on this prefix
+
+    argsWithFormat.unshift('Warning: ' + format); // We intentionally don't use spread (or .apply) directly because it
+    // breaks IE9: https://github.com/facebook/react/issues/13610
+    // eslint-disable-next-line react-internal/no-production-logging
+
+    Function.prototype.apply.call(console[level], console, argsWithFormat);
+  }
+}
+
+// -----------------------------------------------------------------------------
+
+var enableScopeAPI = false; // Experimental Create Event Handle API.
+var enableCacheElement = false;
+var enableTransitionTracing = false; // No known bugs, but needs performance testing
+
+var enableLegacyHidden = false; // Enables unstable_avoidThisFallback feature in Fiber
+// stuff. Intended to enable React core members to more easily debug scheduling
+// issues in DEV builds.
+
+var enableDebugTracing = false; // Track which Fiber(s) schedule render work.
+
+var REACT_MODULE_REFERENCE;
+
+{
+  REACT_MODULE_REFERENCE = Symbol.for('react.module.reference');
+}
+
+function isValidElementType(type) {
+  if (typeof type === 'string' || typeof type === 'function') {
+    return true;
+  } // Note: typeof might be other than 'symbol' or 'number' (e.g. if it's a polyfill).
+
+
+  if (type === REACT_FRAGMENT_TYPE || type === REACT_PROFILER_TYPE || enableDebugTracing  || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || enableLegacyHidden  || type === REACT_OFFSCREEN_TYPE || enableScopeAPI  || enableCacheElement  || enableTransitionTracing ) {
+    return true;
+  }
+
+  if (typeof type === 'object' && type !== null) {
+    if (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || // This needs to include all possible module reference object
+    // types supported by any Flight configuration anywhere since
+    // we don't know which Flight build this will end up being used
+    // with.
+    type.$$typeof === REACT_MODULE_REFERENCE || type.getModuleId !== undefined) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+function getWrappedName(outerType, innerType, wrapperName) {
+  var displayName = outerType.displayName;
+
+  if (displayName) {
+    return displayName;
+  }
+
+  var functionName = innerType.displayName || innerType.name || '';
+  return functionName !== '' ? wrapperName + "(" + functionName + ")" : wrapperName;
+} // Keep in sync with react-reconciler/getComponentNameFromFiber
+
+
+function getContextName(type) {
+  return type.displayName || 'Context';
+} // Note that the reconciler package should generally prefer to use getComponentNameFromFiber() instead.
+
+
+function getComponentNameFromType(type) {
+  if (type == null) {
+    // Host root, text node or just invalid type.
+    return null;
+  }
+
+  {
+    if (typeof type.tag === 'number') {
+      error('Received an unexpected object in getComponentNameFromType(). ' + 'This is likely a bug in React. Please file an issue.');
+    }
+  }
+
+  if (typeof type === 'function') {
+    return type.displayName || type.name || null;
+  }
+
+  if (typeof type === 'string') {
+    return type;
+  }
+
+  switch (type) {
+    case REACT_FRAGMENT_TYPE:
+      return 'Fragment';
+
+    case REACT_PORTAL_TYPE:
+      return 'Portal';
+
+    case REACT_PROFILER_TYPE:
+      return 'Profiler';
+
+    case REACT_STRICT_MODE_TYPE:
+      return 'StrictMode';
+
+    case REACT_SUSPENSE_TYPE:
+      return 'Suspense';
+
+    case REACT_SUSPENSE_LIST_TYPE:
+      return 'SuspenseList';
+
+  }
+
+  if (typeof type === 'object') {
+    switch (type.$$typeof) {
+      case REACT_CONTEXT_TYPE:
+        var context = type;
+        return getContextName(context) + '.Consumer';
+
+      case REACT_PROVIDER_TYPE:
+        var provider = type;
+        return getContextName(provider._context) + '.Provider';
+
+      case REACT_FORWARD_REF_TYPE:
+        return getWrappedName(type, type.render, 'ForwardRef');
+
+      case REACT_MEMO_TYPE:
+        var outerName = type.displayName || null;
+
+        if (outerName !== null) {
+          return outerName;
+        }
+
+        return getComponentNameFromType(type.type) || 'Memo';
+
+      case REACT_LAZY_TYPE:
+        {
+          var lazyComponent = type;
+          var payload = lazyComponent._payload;
+          var init = lazyComponent._init;
+
+          try {
+            return getComponentNameFromType(init(payload));
+          } catch (x) {
+            return null;
+          }
+        }
+
+      // eslint-disable-next-line no-fallthrough
+    }
+  }
+
+  return null;
+}
+
+var assign = Object.assign;
+
+// Helpers to patch console.logs to avoid logging during side-effect free
+// replaying on render function. This currently only patches the object
+// lazily which won't cover if the log function was extracted eagerly.
+// We could also eagerly patch the method.
+var disabledDepth = 0;
+var prevLog;
+var prevInfo;
+var prevWarn;
+var prevError;
+var prevGroup;
+var prevGroupCollapsed;
+var prevGroupEnd;
+
+function disabledLog() {}
+
+disabledLog.__reactDisabledLog = true;
+function disableLogs() {
+  {
+    if (disabledDepth === 0) {
+      /* eslint-disable react-internal/no-production-logging */
+      prevLog = console.log;
+      prevInfo = console.info;
+      prevWarn = console.warn;
+      prevError = console.error;
+      prevGroup = console.group;
+      prevGroupCollapsed = console.groupCollapsed;
+      prevGroupEnd = console.groupEnd; // https://github.com/facebook/react/issues/19099
+
+      var props = {
+        configurable: true,
+        enumerable: true,
+        value: disabledLog,
+        writable: true
+      }; // $FlowFixMe Flow thinks console is immutable.
+
+      Object.defineProperties(console, {
+        info: props,
+        log: props,
+        warn: props,
+        error: props,
+        group: props,
+        groupCollapsed: props,
+        groupEnd: props
+      });
+      /* eslint-enable react-internal/no-production-logging */
+    }
+
+    disabledDepth++;
+  }
+}
+function reenableLogs() {
+  {
+    disabledDepth--;
+
+    if (disabledDepth === 0) {
+      /* eslint-disable react-internal/no-production-logging */
+      var props = {
+        configurable: true,
+        enumerable: true,
+        writable: true
+      }; // $FlowFixMe Flow thinks console is immutable.
+
+      Object.defineProperties(console, {
+        log: assign({}, props, {
+          value: prevLog
+        }),
+        info: assign({}, props, {
+          value: prevInfo
+        }),
+        warn: assign({}, props, {
+          value: prevWarn
+        }),
+        error: assign({}, props, {
+          value: prevError
+        }),
+        group: assign({}, props, {
+          value: prevGroup
+        }),
+        groupCollapsed: assign({}, props, {
+          value: prevGroupCollapsed
+        }),
+        groupEnd: assign({}, props, {
+          value: prevGroupEnd
+        })
+      });
+      /* eslint-enable react-internal/no-production-logging */
+    }
+
+    if (disabledDepth < 0) {
+      error('disabledDepth fell below zero. ' + 'This is a bug in React. Please file an issue.');
+    }
+  }
+}
+
+var ReactCurrentDispatcher = ReactSharedInternals.ReactCurrentDispatcher;
+var prefix;
+function describeBuiltInComponentFrame(name, source, ownerFn) {
+  {
+    if (prefix === undefined) {
+      // Extract the VM specific prefix used by each line.
+      try {
+        throw Error();
+      } catch (x) {
+        var match = x.stack.trim().match(/\n( *(at )?)/);
+        prefix = match && match[1] || '';
+      }
+    } // We use the prefix to ensure our stacks line up with native stack frames.
+
+
+    return '\n' + prefix + name;
+  }
+}
+var reentry = false;
+var componentFrameCache;
+
+{
+  var PossiblyWeakMap = typeof WeakMap === 'function' ? WeakMap : Map;
+  componentFrameCache = new PossiblyWeakMap();
+}
+
+function describeNativeComponentFrame(fn, construct) {
+  // If something asked for a stack inside a fake render, it should get ignored.
+  if ( !fn || reentry) {
+    return '';
+  }
+
+  {
+    var frame = componentFrameCache.get(fn);
+
+    if (frame !== undefined) {
+      return frame;
+    }
+  }
+
+  var control;
+  reentry = true;
+  var previousPrepareStackTrace = Error.prepareStackTrace; // $FlowFixMe It does accept undefined.
+
+  Error.prepareStackTrace = undefined;
+  var previousDispatcher;
+
+  {
+    previousDispatcher = ReactCurrentDispatcher.current; // Set the dispatcher in DEV because this might be call in the render function
+    // for warnings.
+
+    ReactCurrentDispatcher.current = null;
+    disableLogs();
+  }
+
+  try {
+    // This should throw.
+    if (construct) {
+      // Something should be setting the props in the constructor.
+      var Fake = function () {
+        throw Error();
+      }; // $FlowFixMe
+
+
+      Object.defineProperty(Fake.prototype, 'props', {
+        set: function () {
+          // We use a throwing setter instead of frozen or non-writable props
+          // because that won't throw in a non-strict mode function.
+          throw Error();
+        }
+      });
+
+      if (typeof Reflect === 'object' && Reflect.construct) {
+        // We construct a different control for this case to include any extra
+        // frames added by the construct call.
+        try {
+          Reflect.construct(Fake, []);
+        } catch (x) {
+          control = x;
+        }
+
+        Reflect.construct(fn, [], Fake);
+      } else {
+        try {
+          Fake.call();
+        } catch (x) {
+          control = x;
+        }
+
+        fn.call(Fake.prototype);
+      }
+    } else {
+      try {
+        throw Error();
+      } catch (x) {
+        control = x;
+      }
+
+      fn();
+    }
+  } catch (sample) {
+    // This is inlined manually because closure doesn't do it for us.
+    if (sample && control && typeof sample.stack === 'string') {
+      // This extracts the first frame from the sample that isn't also in the control.
+      // Skipping one frame that we assume is the frame that calls the two.
+      var sampleLines = sample.stack.split('\n');
+      var controlLines = control.stack.split('\n');
+      var s = sampleLines.length - 1;
+      var c = controlLines.length - 1;
+
+      while (s >= 1 && c >= 0 && sampleLines[s] !== controlLines[c]) {
+        // We expect at least one stack frame to be shared.
+        // Typically this will be the root most one. However, stack frames may be
+        // cut off due to maximum stack limits. In this case, one maybe cut off
+        // earlier than the other. We assume that the sample is longer or the same
+        // and there for cut off earlier. So we should find the root most frame in
+        // the sample somewhere in the control.
+        c--;
+      }
+
+      for (; s >= 1 && c >= 0; s--, c--) {
+        // Next we find the first one that isn't the same which should be the
+        // frame that called our sample function and the control.
+        if (sampleLines[s] !== controlLines[c]) {
+          // In V8, the first line is describing the message but other VMs don't.
+          // If we're about to return the first line, and the control is also on the same
+          // line, that's a pretty good indicator that our sample threw at same line as
+          // the control. I.e. before we entered the sample frame. So we ignore this result.
+          // This can happen if you passed a class to function component, or non-function.
+          if (s !== 1 || c !== 1) {
+            do {
+              s--;
+              c--; // We may still have similar intermediate frames from the construct call.
+              // The next one that isn't the same should be our match though.
+
+              if (c < 0 || sampleLines[s] !== controlLines[c]) {
+                // V8 adds a "new" prefix for native classes. Let's remove it to make it prettier.
+                var _frame = '\n' + sampleLines[s].replace(' at new ', ' at '); // If our component frame is labeled "<anonymous>"
+                // but we have a user-provided "displayName"
+                // splice it in to make the stack more readable.
+
+
+                if (fn.displayName && _frame.includes('<anonymous>')) {
+                  _frame = _frame.replace('<anonymous>', fn.displayName);
+                }
+
+                {
+                  if (typeof fn === 'function') {
+                    componentFrameCache.set(fn, _frame);
+                  }
+                } // Return the line we found.
+
+
+                return _frame;
+              }
+            } while (s >= 1 && c >= 0);
+          }
+
+          break;
+        }
+      }
+    }
+  } finally {
+    reentry = false;
+
+    {
+      ReactCurrentDispatcher.current = previousDispatcher;
+      reenableLogs();
+    }
+
+    Error.prepareStackTrace = previousPrepareStackTrace;
+  } // Fallback to just using the name if we couldn't make it throw.
+
+
+  var name = fn ? fn.displayName || fn.name : '';
+  var syntheticFrame = name ? describeBuiltInComponentFrame(name) : '';
+
+  {
+    if (typeof fn === 'function') {
+      componentFrameCache.set(fn, syntheticFrame);
+    }
+  }
+
+  return syntheticFrame;
+}
+function describeFunctionComponentFrame(fn, source, ownerFn) {
+  {
+    return describeNativeComponentFrame(fn, false);
+  }
+}
+
+function shouldConstruct(Component) {
+  var prototype = Component.prototype;
+  return !!(prototype && prototype.isReactComponent);
+}
+
+function describeUnknownElementTypeFrameInDEV(type, source, ownerFn) {
+
+  if (type == null) {
+    return '';
+  }
+
+  if (typeof type === 'function') {
+    {
+      return describeNativeComponentFrame(type, shouldConstruct(type));
+    }
+  }
+
+  if (typeof type === 'string') {
+    return describeBuiltInComponentFrame(type);
+  }
+
+  switch (type) {
+    case REACT_SUSPENSE_TYPE:
+      return describeBuiltInComponentFrame('Suspense');
+
+    case REACT_SUSPENSE_LIST_TYPE:
+      return describeBuiltInComponentFrame('SuspenseList');
+  }
+
+  if (typeof type === 'object') {
+    switch (type.$$typeof) {
+      case REACT_FORWARD_REF_TYPE:
+        return describeFunctionComponentFrame(type.render);
+
+      case REACT_MEMO_TYPE:
+        // Memo may contain any component type so we recursively resolve it.
+        return describeUnknownElementTypeFrameInDEV(type.type, source, ownerFn);
+
+      case REACT_LAZY_TYPE:
+        {
+          var lazyComponent = type;
+          var payload = lazyComponent._payload;
+          var init = lazyComponent._init;
+
+          try {
+            // Lazy may contain any component type so we recursively resolve it.
+            return describeUnknownElementTypeFrameInDEV(init(payload), source, ownerFn);
+          } catch (x) {}
+        }
+    }
+  }
+
+  return '';
+}
+
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+
+var loggedTypeFailures = {};
+var ReactDebugCurrentFrame = ReactSharedInternals.ReactDebugCurrentFrame;
+
+function setCurrentlyValidatingElement(element) {
+  {
+    if (element) {
+      var owner = element._owner;
+      var stack = describeUnknownElementTypeFrameInDEV(element.type, element._source, owner ? owner.type : null);
+      ReactDebugCurrentFrame.setExtraStackFrame(stack);
+    } else {
+      ReactDebugCurrentFrame.setExtraStackFrame(null);
+    }
+  }
+}
+
+function checkPropTypes(typeSpecs, values, location, componentName, element) {
+  {
+    // $FlowFixMe This is okay but Flow doesn't know it.
+    var has = Function.call.bind(hasOwnProperty);
+
+    for (var typeSpecName in typeSpecs) {
+      if (has(typeSpecs, typeSpecName)) {
+        var error$1 = void 0; // Prop type validation may throw. In case they do, we don't want to
+        // fail the render phase where it didn't fail before. So we log it.
+        // After these have been cleaned up, we'll let them throw.
+
+        try {
+          // This is intentionally an invariant that gets caught. It's the same
+          // behavior as without this statement except with a better message.
+          if (typeof typeSpecs[typeSpecName] !== 'function') {
+            // eslint-disable-next-line react-internal/prod-error-codes
+            var err = Error((componentName || 'React class') + ': ' + location + ' type `' + typeSpecName + '` is invalid; ' + 'it must be a function, usually from the `prop-types` package, but received `' + typeof typeSpecs[typeSpecName] + '`.' + 'This often happens because of typos such as `PropTypes.function` instead of `PropTypes.func`.');
+            err.name = 'Invariant Violation';
+            throw err;
+          }
+
+          error$1 = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED');
+        } catch (ex) {
+          error$1 = ex;
+        }
+
+        if (error$1 && !(error$1 instanceof Error)) {
+          setCurrentlyValidatingElement(element);
+
+          error('%s: type specification of %s' + ' `%s` is invalid; the type checker ' + 'function must return `null` or an `Error` but returned a %s. ' + 'You may have forgotten to pass an argument to the type checker ' + 'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' + 'shape all require an argument).', componentName || 'React class', location, typeSpecName, typeof error$1);
+
+          setCurrentlyValidatingElement(null);
+        }
+
+        if (error$1 instanceof Error && !(error$1.message in loggedTypeFailures)) {
+          // Only monitor this failure once because there tends to be a lot of the
+          // same error.
+          loggedTypeFailures[error$1.message] = true;
+          setCurrentlyValidatingElement(element);
+
+          error('Failed %s type: %s', location, error$1.message);
+
+          setCurrentlyValidatingElement(null);
+        }
+      }
+    }
+  }
+}
+
+var isArrayImpl = Array.isArray; // eslint-disable-next-line no-redeclare
+
+function isArray(a) {
+  return isArrayImpl(a);
+}
+
+/*
+ * The `'' + value` pattern (used in in perf-sensitive code) throws for Symbol
+ * and Temporal.* types. See https://github.com/facebook/react/pull/22064.
+ *
+ * The functions in this module will throw an easier-to-understand,
+ * easier-to-debug exception with a clear errors message message explaining the
+ * problem. (Instead of a confusing exception thrown inside the implementation
+ * of the `value` object).
+ */
+// $FlowFixMe only called in DEV, so void return is not possible.
+function typeName(value) {
+  {
+    // toStringTag is needed for namespaced types like Temporal.Instant
+    var hasToStringTag = typeof Symbol === 'function' && Symbol.toStringTag;
+    var type = hasToStringTag && value[Symbol.toStringTag] || value.constructor.name || 'Object';
+    return type;
+  }
+} // $FlowFixMe only called in DEV, so void return is not possible.
+
+
+function willCoercionThrow(value) {
+  {
+    try {
+      testStringCoercion(value);
+      return false;
+    } catch (e) {
+      return true;
+    }
+  }
+}
+
+function testStringCoercion(value) {
+  // If you ended up here by following an exception call stack, here's what's
+  // happened: you supplied an object or symbol value to React (as a prop, key,
+  // DOM attribute, CSS property, string ref, etc.) and when React tried to
+  // coerce it to a string using `'' + value`, an exception was thrown.
+  //
+  // The most common types that will cause this exception are `Symbol` instances
+  // and Temporal objects like `Temporal.Instant`. But any object that has a
+  // `valueOf` or `[Symbol.toPrimitive]` method that throws will also cause this
+  // exception. (Library authors do this to prevent users from using built-in
+  // numeric operators like `+` or comparison operators like `>=` because custom
+  // methods are needed to perform accurate arithmetic or comparison.)
+  //
+  // To fix the problem, coerce this object or symbol value to a string before
+  // passing it to React. The most reliable way is usually `String(value)`.
+  //
+  // To find which value is throwing, check the browser or debugger console.
+  // Before this exception was thrown, there should be `console.error` output
+  // that shows the type (Symbol, Temporal.PlainDate, etc.) that caused the
+  // problem and how that type was used: key, atrribute, input value prop, etc.
+  // In most cases, this console output also shows the component and its
+  // ancestor components where the exception happened.
+  //
+  // eslint-disable-next-line react-internal/safe-string-coercion
+  return '' + value;
+}
+function checkKeyStringCoercion(value) {
+  {
+    if (willCoercionThrow(value)) {
+      error('The provided key is an unsupported type %s.' + ' This value must be coerced to a string before before using it here.', typeName(value));
+
+      return testStringCoercion(value); // throw (to help callers find troubleshooting comments)
+    }
+  }
+}
+
+var ReactCurrentOwner = ReactSharedInternals.ReactCurrentOwner;
+var RESERVED_PROPS = {
+  key: true,
+  ref: true,
+  __self: true,
+  __source: true
+};
+var specialPropKeyWarningShown;
+var specialPropRefWarningShown;
+var didWarnAboutStringRefs;
+
+{
+  didWarnAboutStringRefs = {};
+}
+
+function hasValidRef(config) {
+  {
+    if (hasOwnProperty.call(config, 'ref')) {
+      var getter = Object.getOwnPropertyDescriptor(config, 'ref').get;
+
+      if (getter && getter.isReactWarning) {
+        return false;
+      }
+    }
+  }
+
+  return config.ref !== undefined;
+}
+
+function hasValidKey(config) {
+  {
+    if (hasOwnProperty.call(config, 'key')) {
+      var getter = Object.getOwnPropertyDescriptor(config, 'key').get;
+
+      if (getter && getter.isReactWarning) {
+        return false;
+      }
+    }
+  }
+
+  return config.key !== undefined;
+}
+
+function warnIfStringRefCannotBeAutoConverted(config, self) {
+  {
+    if (typeof config.ref === 'string' && ReactCurrentOwner.current && self && ReactCurrentOwner.current.stateNode !== self) {
+      var componentName = getComponentNameFromType(ReactCurrentOwner.current.type);
+
+      if (!didWarnAboutStringRefs[componentName]) {
+        error('Component "%s" contains the string ref "%s". ' + 'Support for string refs will be removed in a future major release. ' + 'This case cannot be automatically converted to an arrow function. ' + 'We ask you to manually fix this case by using useRef() or createRef() instead. ' + 'Learn more about using refs safely here: ' + 'https://reactjs.org/link/strict-mode-string-ref', getComponentNameFromType(ReactCurrentOwner.current.type), config.ref);
+
+        didWarnAboutStringRefs[componentName] = true;
+      }
+    }
+  }
+}
+
+function defineKeyPropWarningGetter(props, displayName) {
+  {
+    var warnAboutAccessingKey = function () {
+      if (!specialPropKeyWarningShown) {
+        specialPropKeyWarningShown = true;
+
+        error('%s: `key` is not a prop. Trying to access it will result ' + 'in `undefined` being returned. If you need to access the same ' + 'value within the child component, you should pass it as a different ' + 'prop. (https://reactjs.org/link/special-props)', displayName);
+      }
+    };
+
+    warnAboutAccessingKey.isReactWarning = true;
+    Object.defineProperty(props, 'key', {
+      get: warnAboutAccessingKey,
+      configurable: true
+    });
+  }
+}
+
+function defineRefPropWarningGetter(props, displayName) {
+  {
+    var warnAboutAccessingRef = function () {
+      if (!specialPropRefWarningShown) {
+        specialPropRefWarningShown = true;
+
+        error('%s: `ref` is not a prop. Trying to access it will result ' + 'in `undefined` being returned. If you need to access the same ' + 'value within the child component, you should pass it as a different ' + 'prop. (https://reactjs.org/link/special-props)', displayName);
+      }
+    };
+
+    warnAboutAccessingRef.isReactWarning = true;
+    Object.defineProperty(props, 'ref', {
+      get: warnAboutAccessingRef,
+      configurable: true
+    });
+  }
+}
+/**
+ * Factory method to create a new React element. This no longer adheres to
+ * the class pattern, so do not use new to call it. Also, instanceof check
+ * will not work. Instead test $$typeof field against Symbol.for('react.element') to check
+ * if something is a React Element.
+ *
+ * @param {*} type
+ * @param {*} props
+ * @param {*} key
+ * @param {string|object} ref
+ * @param {*} owner
+ * @param {*} self A *temporary* helper to detect places where `this` is
+ * different from the `owner` when React.createElement is called, so that we
+ * can warn. We want to get rid of owner and replace string `ref`s with arrow
+ * functions, and as long as `this` and owner are the same, there will be no
+ * change in behavior.
+ * @param {*} source An annotation object (added by a transpiler or otherwise)
+ * indicating filename, line number, and/or other information.
+ * @internal
+ */
+
+
+var ReactElement = function (type, key, ref, self, source, owner, props) {
+  var element = {
+    // This tag allows us to uniquely identify this as a React Element
+    $$typeof: REACT_ELEMENT_TYPE,
+    // Built-in properties that belong on the element
+    type: type,
+    key: key,
+    ref: ref,
+    props: props,
+    // Record the component responsible for creating this element.
+    _owner: owner
+  };
+
+  {
+    // The validation flag is currently mutative. We put it on
+    // an external backing store so that we can freeze the whole object.
+    // This can be replaced with a WeakMap once they are implemented in
+    // commonly used development environments.
+    element._store = {}; // To make comparing ReactElements easier for testing purposes, we make
+    // the validation flag non-enumerable (where possible, which should
+    // include every environment we run tests in), so the test framework
+    // ignores it.
+
+    Object.defineProperty(element._store, 'validated', {
+      configurable: false,
+      enumerable: false,
+      writable: true,
+      value: false
+    }); // self and source are DEV only properties.
+
+    Object.defineProperty(element, '_self', {
+      configurable: false,
+      enumerable: false,
+      writable: false,
+      value: self
+    }); // Two elements created in two different places should be considered
+    // equal for testing purposes and therefore we hide it from enumeration.
+
+    Object.defineProperty(element, '_source', {
+      configurable: false,
+      enumerable: false,
+      writable: false,
+      value: source
+    });
+
+    if (Object.freeze) {
+      Object.freeze(element.props);
+      Object.freeze(element);
+    }
+  }
+
+  return element;
+};
+/**
+ * https://github.com/reactjs/rfcs/pull/107
+ * @param {*} type
+ * @param {object} props
+ * @param {string} key
+ */
+
+function jsxDEV(type, config, maybeKey, source, self) {
+  {
+    var propName; // Reserved names are extracted
+
+    var props = {};
+    var key = null;
+    var ref = null; // Currently, key can be spread in as a prop. This causes a potential
+    // issue if key is also explicitly declared (ie. <div {...props} key="Hi" />
+    // or <div key="Hi" {...props} /> ). We want to deprecate key spread,
+    // but as an intermediary step, we will use jsxDEV for everything except
+    // <div {...props} key="Hi" />, because we aren't currently able to tell if
+    // key is explicitly declared to be undefined or not.
+
+    if (maybeKey !== undefined) {
+      {
+        checkKeyStringCoercion(maybeKey);
+      }
+
+      key = '' + maybeKey;
+    }
+
+    if (hasValidKey(config)) {
+      {
+        checkKeyStringCoercion(config.key);
+      }
+
+      key = '' + config.key;
+    }
+
+    if (hasValidRef(config)) {
+      ref = config.ref;
+      warnIfStringRefCannotBeAutoConverted(config, self);
+    } // Remaining properties are added to a new props object
+
+
+    for (propName in config) {
+      if (hasOwnProperty.call(config, propName) && !RESERVED_PROPS.hasOwnProperty(propName)) {
+        props[propName] = config[propName];
+      }
+    } // Resolve default props
+
+
+    if (type && type.defaultProps) {
+      var defaultProps = type.defaultProps;
+
+      for (propName in defaultProps) {
+        if (props[propName] === undefined) {
+          props[propName] = defaultProps[propName];
+        }
+      }
+    }
+
+    if (key || ref) {
+      var displayName = typeof type === 'function' ? type.displayName || type.name || 'Unknown' : type;
+
+      if (key) {
+        defineKeyPropWarningGetter(props, displayName);
+      }
+
+      if (ref) {
+        defineRefPropWarningGetter(props, displayName);
+      }
+    }
+
+    return ReactElement(type, key, ref, self, source, ReactCurrentOwner.current, props);
+  }
+}
+
+var ReactCurrentOwner$1 = ReactSharedInternals.ReactCurrentOwner;
+var ReactDebugCurrentFrame$1 = ReactSharedInternals.ReactDebugCurrentFrame;
+
+function setCurrentlyValidatingElement$1(element) {
+  {
+    if (element) {
+      var owner = element._owner;
+      var stack = describeUnknownElementTypeFrameInDEV(element.type, element._source, owner ? owner.type : null);
+      ReactDebugCurrentFrame$1.setExtraStackFrame(stack);
+    } else {
+      ReactDebugCurrentFrame$1.setExtraStackFrame(null);
+    }
+  }
+}
+
+var propTypesMisspellWarningShown;
+
+{
+  propTypesMisspellWarningShown = false;
+}
+/**
+ * Verifies the object is a ReactElement.
+ * See https://reactjs.org/docs/react-api.html#isvalidelement
+ * @param {?object} object
+ * @return {boolean} True if `object` is a ReactElement.
+ * @final
+ */
+
+
+function isValidElement(object) {
+  {
+    return typeof object === 'object' && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
+  }
+}
+
+function getDeclarationErrorAddendum() {
+  {
+    if (ReactCurrentOwner$1.current) {
+      var name = getComponentNameFromType(ReactCurrentOwner$1.current.type);
+
+      if (name) {
+        return '\n\nCheck the render method of `' + name + '`.';
+      }
+    }
+
+    return '';
+  }
+}
+
+function getSourceInfoErrorAddendum(source) {
+  {
+    if (source !== undefined) {
+      var fileName = source.fileName.replace(/^.*[\\\/]/, '');
+      var lineNumber = source.lineNumber;
+      return '\n\nCheck your code at ' + fileName + ':' + lineNumber + '.';
+    }
+
+    return '';
+  }
+}
+/**
+ * Warn if there's no key explicitly set on dynamic arrays of children or
+ * object keys are not valid. This allows us to keep track of children between
+ * updates.
+ */
+
+
+var ownerHasKeyUseWarning = {};
+
+function getCurrentComponentErrorInfo(parentType) {
+  {
+    var info = getDeclarationErrorAddendum();
+
+    if (!info) {
+      var parentName = typeof parentType === 'string' ? parentType : parentType.displayName || parentType.name;
+
+      if (parentName) {
+        info = "\n\nCheck the top-level render call using <" + parentName + ">.";
+      }
+    }
+
+    return info;
+  }
+}
+/**
+ * Warn if the element doesn't have an explicit key assigned to it.
+ * This element is in an array. The array could grow and shrink or be
+ * reordered. All children that haven't already been validated are required to
+ * have a "key" property assigned to it. Error statuses are cached so a warning
+ * will only be shown once.
+ *
+ * @internal
+ * @param {ReactElement} element Element that requires a key.
+ * @param {*} parentType element's parent's type.
+ */
+
+
+function validateExplicitKey(element, parentType) {
+  {
+    if (!element._store || element._store.validated || element.key != null) {
+      return;
+    }
+
+    element._store.validated = true;
+    var currentComponentErrorInfo = getCurrentComponentErrorInfo(parentType);
+
+    if (ownerHasKeyUseWarning[currentComponentErrorInfo]) {
+      return;
+    }
+
+    ownerHasKeyUseWarning[currentComponentErrorInfo] = true; // Usually the current owner is the offender, but if it accepts children as a
+    // property, it may be the creator of the child that's responsible for
+    // assigning it a key.
+
+    var childOwner = '';
+
+    if (element && element._owner && element._owner !== ReactCurrentOwner$1.current) {
+      // Give the component that originally created this child.
+      childOwner = " It was passed a child from " + getComponentNameFromType(element._owner.type) + ".";
+    }
+
+    setCurrentlyValidatingElement$1(element);
+
+    error('Each child in a list should have a unique "key" prop.' + '%s%s See https://reactjs.org/link/warning-keys for more information.', currentComponentErrorInfo, childOwner);
+
+    setCurrentlyValidatingElement$1(null);
+  }
+}
+/**
+ * Ensure that every element either is passed in a static location, in an
+ * array with an explicit keys property defined, or in an object literal
+ * with valid key property.
+ *
+ * @internal
+ * @param {ReactNode} node Statically passed child of any type.
+ * @param {*} parentType node's parent's type.
+ */
+
+
+function validateChildKeys(node, parentType) {
+  {
+    if (typeof node !== 'object') {
+      return;
+    }
+
+    if (isArray(node)) {
+      for (var i = 0; i < node.length; i++) {
+        var child = node[i];
+
+        if (isValidElement(child)) {
+          validateExplicitKey(child, parentType);
+        }
+      }
+    } else if (isValidElement(node)) {
+      // This element was passed in a valid location.
+      if (node._store) {
+        node._store.validated = true;
+      }
+    } else if (node) {
+      var iteratorFn = getIteratorFn(node);
+
+      if (typeof iteratorFn === 'function') {
+        // Entry iterators used to provide implicit keys,
+        // but now we print a separate warning for them later.
+        if (iteratorFn !== node.entries) {
+          var iterator = iteratorFn.call(node);
+          var step;
+
+          while (!(step = iterator.next()).done) {
+            if (isValidElement(step.value)) {
+              validateExplicitKey(step.value, parentType);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+/**
+ * Given an element, validate that its props follow the propTypes definition,
+ * provided by the type.
+ *
+ * @param {ReactElement} element
+ */
+
+
+function validatePropTypes(element) {
+  {
+    var type = element.type;
+
+    if (type === null || type === undefined || typeof type === 'string') {
+      return;
+    }
+
+    var propTypes;
+
+    if (typeof type === 'function') {
+      propTypes = type.propTypes;
+    } else if (typeof type === 'object' && (type.$$typeof === REACT_FORWARD_REF_TYPE || // Note: Memo only checks outer props here.
+    // Inner props are checked in the reconciler.
+    type.$$typeof === REACT_MEMO_TYPE)) {
+      propTypes = type.propTypes;
+    } else {
+      return;
+    }
+
+    if (propTypes) {
+      // Intentionally inside to avoid triggering lazy initializers:
+      var name = getComponentNameFromType(type);
+      checkPropTypes(propTypes, element.props, 'prop', name, element);
+    } else if (type.PropTypes !== undefined && !propTypesMisspellWarningShown) {
+      propTypesMisspellWarningShown = true; // Intentionally inside to avoid triggering lazy initializers:
+
+      var _name = getComponentNameFromType(type);
+
+      error('Component %s declared `PropTypes` instead of `propTypes`. Did you misspell the property assignment?', _name || 'Unknown');
+    }
+
+    if (typeof type.getDefaultProps === 'function' && !type.getDefaultProps.isReactClassApproved) {
+      error('getDefaultProps is only used on classic React.createClass ' + 'definitions. Use a static property named `defaultProps` instead.');
+    }
+  }
+}
+/**
+ * Given a fragment, validate that it can only be provided with fragment props
+ * @param {ReactElement} fragment
+ */
+
+
+function validateFragmentProps(fragment) {
+  {
+    var keys = Object.keys(fragment.props);
+
+    for (var i = 0; i < keys.length; i++) {
+      var key = keys[i];
+
+      if (key !== 'children' && key !== 'key') {
+        setCurrentlyValidatingElement$1(fragment);
+
+        error('Invalid prop `%s` supplied to `React.Fragment`. ' + 'React.Fragment can only have `key` and `children` props.', key);
+
+        setCurrentlyValidatingElement$1(null);
+        break;
+      }
+    }
+
+    if (fragment.ref !== null) {
+      setCurrentlyValidatingElement$1(fragment);
+
+      error('Invalid attribute `ref` supplied to `React.Fragment`.');
+
+      setCurrentlyValidatingElement$1(null);
+    }
+  }
+}
+
+function jsxWithValidation(type, props, key, isStaticChildren, source, self) {
+  {
+    var validType = isValidElementType(type); // We warn in this case but don't throw. We expect the element creation to
+    // succeed and there will likely be errors in render.
+
+    if (!validType) {
+      var info = '';
+
+      if (type === undefined || typeof type === 'object' && type !== null && Object.keys(type).length === 0) {
+        info += ' You likely forgot to export your component from the file ' + "it's defined in, or you might have mixed up default and named imports.";
+      }
+
+      var sourceInfo = getSourceInfoErrorAddendum(source);
+
+      if (sourceInfo) {
+        info += sourceInfo;
+      } else {
+        info += getDeclarationErrorAddendum();
+      }
+
+      var typeString;
+
+      if (type === null) {
+        typeString = 'null';
+      } else if (isArray(type)) {
+        typeString = 'array';
+      } else if (type !== undefined && type.$$typeof === REACT_ELEMENT_TYPE) {
+        typeString = "<" + (getComponentNameFromType(type.type) || 'Unknown') + " />";
+        info = ' Did you accidentally export a JSX literal instead of a component?';
+      } else {
+        typeString = typeof type;
+      }
+
+      error('React.jsx: type is invalid -- expected a string (for ' + 'built-in components) or a class/function (for composite ' + 'components) but got: %s.%s', typeString, info);
+    }
+
+    var element = jsxDEV(type, props, key, source, self); // The result can be nullish if a mock or a custom function is used.
+    // TODO: Drop this when these are no longer allowed as the type argument.
+
+    if (element == null) {
+      return element;
+    } // Skip key warning if the type isn't valid since our key validation logic
+    // doesn't expect a non-string/function type and can throw confusing errors.
+    // We don't want exception behavior to differ between dev and prod.
+    // (Rendering will throw with a helpful message and as soon as the type is
+    // fixed, the key warnings will appear.)
+
+
+    if (validType) {
+      var children = props.children;
+
+      if (children !== undefined) {
+        if (isStaticChildren) {
+          if (isArray(children)) {
+            for (var i = 0; i < children.length; i++) {
+              validateChildKeys(children[i], type);
+            }
+
+            if (Object.freeze) {
+              Object.freeze(children);
+            }
+          } else {
+            error('React.jsx: Static children should always be an array. ' + 'You are likely explicitly calling React.jsxs or React.jsxDEV. ' + 'Use the Babel transform instead.');
+          }
+        } else {
+          validateChildKeys(children, type);
+        }
+      }
+    }
+
+    if (type === REACT_FRAGMENT_TYPE) {
+      validateFragmentProps(element);
+    } else {
+      validatePropTypes(element);
+    }
+
+    return element;
+  }
+} // These two functions exist to still get child warnings in dev
+// even with the prod transform. This means that jsxDEV is purely
+// opt-in behavior for better messages but that we won't stop
+// giving you warnings if you use production apis.
+
+function jsxWithValidationStatic(type, props, key) {
+  {
+    return jsxWithValidation(type, props, key, true);
+  }
+}
+function jsxWithValidationDynamic(type, props, key) {
+  {
+    return jsxWithValidation(type, props, key, false);
+  }
+}
+
+var jsx =  jsxWithValidationDynamic ; // we may want to special case jsxs internally to take advantage of static children.
+// for now we can ship identical prod functions
+
+var jsxs =  jsxWithValidationStatic ;
+
+exports.Fragment = REACT_FRAGMENT_TYPE;
+exports.jsx = jsx;
+exports.jsxs = jsxs;
+  })();
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/react/cjs/react.development.js":
 /*!*****************************************************!*\
   !*** ./node_modules/react/cjs/react.development.js ***!
@@ -60604,6 +62864,22 @@ if (
 
 if (false) {} else {
   module.exports = __webpack_require__(/*! ./cjs/react.development.js */ "./node_modules/react/cjs/react.development.js");
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/react/jsx-runtime.js":
+/*!*******************************************!*\
+  !*** ./node_modules/react/jsx-runtime.js ***!
+  \*******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+if (false) {} else {
+  module.exports = __webpack_require__(/*! ./cjs/react-jsx-runtime.development.js */ "./node_modules/react/cjs/react-jsx-runtime.development.js");
 }
 
 
